@@ -1,0 +1,24 @@
+{
+  "project": "harness-starter",
+  "description": "機能リストと受け入れ基準。これが唯一の信頼できる進捗ソース (single source of truth)。",
+  "rules": [
+    "status は failing | passing のみ。新規は必ず failing。",
+    "受け入れ基準 (acceptance) を削除・緩和してはならない。",
+    "status を passing にできるのは evaluator の判定時のみ。"
+  ],
+  "features": [
+    {
+      "id": "F-001",
+      "title": "サンプル機能: ヘルスチェックエンドポイント",
+      "priority": 1,
+      "status": "failing",
+      "depends_on": [],
+      "acceptance": [
+        "GET /health が 200 と {\"status\":\"ok\"} を返す",
+        "サーバ未起動時に init.sh で起動でき、起動後に上記が成立する",
+        "対応する自動テストが存在し、check.sh で実行される"
+      ],
+      "notes": "これはテンプレートのサンプル。planner が本物の機能に置き換える。"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# OS / editor
+.DS_Store
+*.swp
+
+# Claude Code local overrides (machine-specific, do not commit)
+.claude/settings.local.json
+
+# 複製先アプリで使うときにスタックに合わせてコメントを外す
+# node_modules/
+# __pycache__/
+# .venv/
+# dist/
+# build/
