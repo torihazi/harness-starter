@@ -20,6 +20,15 @@ model: opus
 - プロジェクト初期、またはビジュアルの方向性を変えるときのみ。
 - UI を持たないアプリ (CLI / バックエンド / ライブラリ) では呼ばれない。
 
+## プレースホルダの差し替え (初回 UI 着手前に必須)
+テンプレ同梱の `DESIGN.md` はプレースホルダ。UI を実装する前に必ず実物へ差し替える。
+1. アプリの世界観に近いものを getdesign.md / designmd.app で探す (実在ブランドの解析なので参考に留める)。
+2. 取得する: `npx getdesign@latest add <name>` 等。または公式仕様 (google-labs-code/design.md) で新規作成する。
+3. ルートの `DESIGN.md` を置換し、バージョンを固定する。
+4. validate して commit (vendoring) する。
+- UI が無いアプリでは `DESIGN.md` を削除する。
+- 差し替え忘れは `check.sh` が `PLACEHOLDER` を検出して警告する。
+
 ## DESIGN.md の形 (公式 alpha 仕様)
 - 先頭: 機械可読な design token (YAML front matter) — 正確な hex / font size / spacing / radius / component styles。
 - 本文: 人間可読な rationale (Markdown) — なぜその値か、どう適用するか。

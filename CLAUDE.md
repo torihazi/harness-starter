@@ -86,3 +86,4 @@ plan → (human approval gate) → design → execute → evaluate → ┐
 - **再発したら supervision でなくハーネスを直す**: 同じ失敗が繰り返されたら、人手レビューを増やすのではなく Guide / Sensor (この CLAUDE.md・check.sh・agents) を改善する。
 - **UI は DESIGN.md に準拠**: (UIアプリのみ) 色・タイポ・余白・コンポーネントは `DESIGN.md` のトークンに従う。値を直書きせず export したトークン (Tailwind / CSS 変数等) を使う。`DESIGN.md` を変更してよいのは `designer` だけ。
 - **DESIGN.md は vendoring + バージョン固定**: 実行時に外部から取得しない。alpha 仕様なので固定し、更新時のみ `designer` が差し替える。
+- **プレースホルダのまま UI を作らない**: テンプレ同梱の `DESIGN.md` はプレースホルダ。UIアプリでは `designer` が実物 (getdesign.md / designmd.app) へ差し替えてから UI を実装する。UI が無いアプリでは `DESIGN.md` を削除する。差し替え忘れは `check.sh` が警告する。

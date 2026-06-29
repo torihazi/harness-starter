@@ -21,6 +21,11 @@ run () {
 # DESIGN.md 視覚 Sensor (UIアプリのみ。alpha 仕様。正確なコマンドは google-labs-code/design.md で確認):
 # [ -f DESIGN.md ] && run npx design-md validate DESIGN.md
 
+# DESIGN.md プレースホルダ差し替え忘れの保険 (警告のみ、check は止めない):
+if [ -f DESIGN.md ] && grep -q "PLACEHOLDER" DESIGN.md; then
+  echo "⚠ DESIGN.md がプレースホルダのまま — getdesign.md の実物へ差し替えるか、UIが無ければ削除する (README参照)"
+fi
+
 if [ "$fail" -eq 0 ]; then
   echo "ALL CHECKS PASSED"
 else

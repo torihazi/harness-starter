@@ -82,10 +82,14 @@ cd my-app && git init
 ## ブートストラップ (複製後に1回だけ)
 
 1. `init.sh` / `scripts/check.sh` を技術スタックに合わせて埋める (実行権限は付与済み)。
-2. `git add -A && git commit -m "init"` でベースラインを作る。
-3. このディレクトリで Claude Code を起動する (この階層の CLAUDE.md / .claude が効く)。
-4. planner を呼び、`features.json` のサンプル F-001 を本物の機能に置き換える。
-5. CLAUDE.md の「セッション開始ルーチン」「ループ」に従って回す。
+2. このディレクトリで Claude Code を起動する (この階層の CLAUDE.md / .claude が効く)。
+3. **(UIアプリなら) `DESIGN.md` を実物へ差し替える** — `designer` を呼び、[getdesign.md](https://getdesign.md/) /
+   [designmd.app](https://designmd.app/) から世界観の近いものを取得 (`npx getdesign@latest add <name>` 等) して
+   プレースホルダを置換 → validate → commit。**UI が無いアプリなら `DESIGN.md` を削除する。**
+   (差し替え忘れると `check.sh` が警告を出す。)
+4. `planner` を呼び、`features.json` のサンプル (F-001 / UIの例 F-002) を本物の機能に置き換える。
+5. `git add -A && git commit -m "init"` でベースラインを作る。
+6. CLAUDE.md の「セッション開始ルーチン」「ループ」に従って回す。
 
 ## テンプレート自体を改善する (master を更新)
 
