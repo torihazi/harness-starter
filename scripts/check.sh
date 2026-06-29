@@ -18,6 +18,9 @@ run () {
 # run mypy .
 # run pytest -q
 
+# DESIGN.md 視覚 Sensor (UIアプリのみ。alpha 仕様。正確なコマンドは google-labs-code/design.md で確認):
+# [ -f DESIGN.md ] && run npx design-md validate DESIGN.md
+
 if [ "$fail" -eq 0 ]; then
   echo "ALL CHECKS PASSED"
 else

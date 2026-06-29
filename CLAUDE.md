@@ -12,10 +12,13 @@
 
 |                          | Computational (決定的・速い)        | Inferential (AI判断・遅い)            |
 | ------------------------ | ----------------------------------- | ------------------------------------- |
-| Guide (事前に方向づけ)   | 型 / 規約 / `init.sh` / テンプレート | `planner` / `designer`                |
-| Sensor (事後に問題検知)  | lint / test / typecheck (`check.sh`)| `evaluator`                           |
+| Guide (事前に方向づけ)   | 型 / 規約 / `init.sh` / テンプレート / `DESIGN.md` | `planner` / `designer` (DESIGN.md を所有) |
+| Sensor (事後に問題検知)  | lint / test / typecheck / DESIGN.md validate (`check.sh`)| `evaluator`                           |
 
 原則: **速くて確実な検証は機械 (Computational) に任せ、AI エージェントは機械にできない意味判断だけに使う。**
+
+UIアプリの視覚デザインは `DESIGN.md` (Google の DESIGN.md 形式) に固定する。これは Inferential Guide (`designer`)
+が所有する成果物だが、機械可読な design token を持ち CLI で validate できるため、視覚の Computational Sensor にもなる。
 
 ---
 
@@ -30,6 +33,9 @@
 - `progress.md` — 直近で何をしたか / 次に何をするか / 既知の問題 のメモ。
 - git 履歴 — リカバリポイント。壊れたらコミットへ巻き戻す。
 - `init.sh` — 環境構築・サーバ起動。各セッション開始時に実行する。
+- `DESIGN.md` — (UIアプリのみ) ビジュアルアイデンティティ仕様。Google の DESIGN.md 形式 = YAML front matter の
+  design token (機械可読・CLIで validate) + Markdown の rationale (理由)。`designer` が所有し repo に vendoring する。
+  色・タイポ・余白は直書きせず、export したトークンを参照する。alpha 仕様なのでバージョンを固定する。
 
 ---
 
@@ -54,7 +60,8 @@ plan → (human approval gate) → design → execute → evaluate → ┐
 
 - **plan**: `planner` が選んだ機能を分解し、受け入れ基準を `features.json` に書く。
 - **承認ゲート**: ファイルを書き換える *前に* 人間が plan を承認する (Explore/Plan は自由、Execute の手前で止める)。
-- **design**: 必要なら `designer` がアーキテクチャ / インターフェースを決める (新規 or 大きな変更時のみ)。
+- **design**: (UIアプリのみ) `designer` が `DESIGN.md` (ビジュアルアイデンティティ) を選定/生成・validate・所有する
+  (新規 or デザイン変更時のみ)。ソフトウェア構造 (アーキテクチャ / 技術選定) の判断は `planner` 側に寄せる。
 - **execute**: `executor` が **一度に 1 機能だけ** 実装する。
 - **evaluate**: `evaluator` が独立に採点する。**executor に自己採点させない。**
 - `passing` になるまで feedback を `executor` に戻して反復する。
@@ -77,3 +84,5 @@ plan → (human approval gate) → design → execute → evaluate → ┐
 - **重い探索はサブエージェントへ**: executor は広いコード探索をサブエージェントに委譲し、本体には 1,000〜2,000 トークンの凝縮要約だけを返させる。
 - **JIT コンテキスト**: 最初から全部読み込まない。パス / クエリだけ持ち、必要時に動的ロードする。
 - **再発したら supervision でなくハーネスを直す**: 同じ失敗が繰り返されたら、人手レビューを増やすのではなく Guide / Sensor (この CLAUDE.md・check.sh・agents) を改善する。
+- **UI は DESIGN.md に準拠**: (UIアプリのみ) 色・タイポ・余白・コンポーネントは `DESIGN.md` のトークンに従う。値を直書きせず export したトークン (Tailwind / CSS 変数等) を使う。`DESIGN.md` を変更してよいのは `designer` だけ。
+- **DESIGN.md は vendoring + バージョン固定**: 実行時に外部から取得しない。alpha 仕様なので固定し、更新時のみ `designer` が差し替える。

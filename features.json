@@ -19,6 +19,19 @@
         "対応する自動テストが存在し、check.sh で実行される"
       ],
       "notes": "これはテンプレートのサンプル。planner が本物の機能に置き換える。"
+    },
+    {
+      "id": "F-002",
+      "title": "サンプルUI機能: トップページ",
+      "priority": 2,
+      "status": "failing",
+      "depends_on": ["F-001"],
+      "acceptance": [
+        "トップページが表示され、主要導線が1画面に収まる",
+        "色・タイポ・余白・コンポーネントが DESIGN.md のトークンに準拠している (値の直書きが無い)",
+        "DESIGN.md validate が通る"
+      ],
+      "notes": "UIアプリでの視覚受け入れ基準の例。DESIGN.md 準拠を evaluator が描画して確認する。UIが無いアプリでは削除してよい。"
     }
   ]
 }
