@@ -1,14 +1,26 @@
 {
   "project": "harness-starter",
-  "description": "機能リストと受け入れ基準。これが唯一の信頼できる進捗ソース (single source of truth)。",
+  "description": "機能リスト・受け入れ基準・sprint。これが唯一の信頼できる進捗ソース (single source of truth)。",
   "rules": [
     "status は failing | passing のみ。新規は必ず failing。",
     "受け入れ基準 (acceptance) を削除・緩和してはならない。",
-    "status を passing にできるのは evaluator の判定時のみ。"
+    "status を passing にできるのは evaluator の判定時のみ。",
+    "sprints[] は順序付きの束。sprint.status は planned | in_progress | done。",
+    "plan (全機能 + sprint 分割) は人間が1回承認し、以後は sprint 境界の go/no-go だけを取る。",
+    "commit は機能ごと、PR は sprint ごとに出す。sprint 末にまとめてコミットしない。"
+  ],
+  "sprints": [
+    {
+      "id": "S-1",
+      "title": "サンプル sprint: 最小の動くアプリ",
+      "goal": "ヘルスチェックとトップページまでを1本の PR で出せる状態にする。",
+      "status": "planned"
+    }
   ],
   "features": [
     {
       "id": "F-001",
+      "sprint": "S-1",
       "title": "サンプル機能: ヘルスチェックエンドポイント",
       "priority": 1,
       "status": "failing",
@@ -22,6 +34,7 @@
     },
     {
       "id": "F-002",
+      "sprint": "S-1",
       "title": "サンプルUI機能: トップページ",
       "priority": 2,
       "status": "failing",
