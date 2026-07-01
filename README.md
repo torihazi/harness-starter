@@ -11,7 +11,7 @@
 ```
 harness-starter/
 ├── CLAUDE.md            # ループ定義・セッション開始ルーチン・動作基準 (ハーネスの中心)
-├── features.json        # 機能リスト+受け入れ基準 = 唯一の信頼できる進捗ソース
+├── features.json        # 機能リスト+受け入れ基準+sprint = 唯一の信頼できる進捗ソース
 ├── progress.md          # コンテキスト外の記憶 (やったこと/次の一手/既知の問題)
 ├── DESIGN.md            # 視覚アイデンティティ (Googleの DESIGN.md形式・UIアプリのみ/任意)
 ├── init.sh              # 環境構築・サーバ起動 (Computational Guide)
@@ -38,12 +38,13 @@ harness-starter/
 ## ループ
 
 ```
-plan → (人間の承認) → design → execute → evaluate → (failing なら feedback して戻る)
+plan(全機能 + sprint 分割) → 人間が1回承認 → [sprint ごと: 機能ループ(execute → evaluate → 機能ごと commit) → PR → go/no-go] → 次 sprint
 ```
 
-- 承認ゲートは Plan と Execute の間に置く (探索・計画は自由、ファイル変更の手前で止める)。
-- 生成 (executor) と評価 (evaluator) は必ず分離する。
-- 一度に 1 機能だけ。evaluator が passing を出すまで完了扱いにしない。
+- **plan は最初に書き切る**: planner が全機能へ分解し、順序付きの sprint に束ねる。承認は plan 全体で1回だけ。
+- 承認後は本体セッションが sprint を自律的に回す。止まるのは「同一機能で 5 回失敗」「想定外ブロッカー」「sprint 境界の go/no-go」のときだけ。
+- 生成 (executor) と評価 (evaluator) は必ず分離する。機能は逐次に1つずつ (同時実装はしない)。
+- commit は機能ごと、PR は sprint ごと。evaluator が passing を出すまで完了扱いにしない。
 
 ## ビジュアルデザイン (DESIGN.md) — UIアプリのみ
 
