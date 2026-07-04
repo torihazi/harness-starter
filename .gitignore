@@ -2,6 +2,11 @@
 .DS_Store
 *.swp
 
+# Environment variables / secrets (never commit)
+.env
+.env.*
+!.env.example
+
 # Claude Code local overrides (machine-specific, do not commit)
 .claude/settings.local.json
 
