@@ -14,7 +14,7 @@ harness-starter/
 ├── features.json        # 機能リスト+受け入れ基準+sprint = 唯一の信頼できる進捗ソース
 ├── progress.md          # コンテキスト外の記憶 (やったこと/次の一手/既知の問題)
 ├── DESIGN.md            # 視覚アイデンティティ (Googleの DESIGN.md形式・UIアプリのみ/任意)
-├── init.sh              # 環境構築・サーバ起動 (Computational Guide)
+├── init.sh              # 環境構築 (依存インストール等。サーバは起動しない) (Computational Guide)
 ├── scripts/
 │   └── check.sh         # lint/typecheck/test/DESIGN.md validate = Computational Sensor
 └── .claude/

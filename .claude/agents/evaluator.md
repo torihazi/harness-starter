@@ -14,9 +14,12 @@ model: opus
 ## 手順
 1. 対象機能の受け入れ基準を `features.json` から読む。
 2. `./scripts/check.sh` (lint/test/typecheck) を走らせる。
-3. **実際に動かして検証する** (e2e / browser automation など)。コードを読むだけで合格にしない。
-4. 各受け入れ基準を 1 項目ずつ `pass` / `fail` で判定する。
-5. structured な判定を返す:
+3. ブラウザ操作や HTTP リクエストでの検証が必要なら、開発サーバが起動済みか確認し
+   (例: ポートへの疎通確認)、起動していなければ **この evaluator 自身が立ち上げる**
+   (`init.sh` はサーバを起動しない。毎セッション起動して重複させないため)。
+4. **実際に動かして検証する** (e2e / browser automation など)。コードを読むだけで合格にしない。
+5. 各受け入れ基準を 1 項目ずつ `pass` / `fail` で判定する。
+6. structured な判定を返す:
    ```json
    {
      "feature_id": "<id>",
