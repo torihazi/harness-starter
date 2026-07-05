@@ -39,7 +39,7 @@ harness-starter/
 ## ループ
 
 ```
-plan(全機能 + sprint 分割) → 人間が1回承認 → [sprint ごと: 機能ループ(execute → evaluate → 機能ごと commit) → PR → go/no-go] → 次 sprint
+plan(全機能 + sprint 分割) → 人間が1回承認 → [sprint ごと: 機能ループ(execute → evaluate → 機能ごと commit) → PR → go/no-go → 次 sprint] → done
 ```
 
 - **plan は最初に書き切る**: planner が全機能へ分解し、順序付きの sprint に束ねる。承認は plan 全体で1回だけ。
