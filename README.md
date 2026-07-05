@@ -14,6 +14,7 @@ harness-starter/
 ├── features.json        # 機能リスト+受け入れ基準+sprint = 唯一の信頼できる進捗ソース
 ├── progress.md          # コンテキスト外の記憶 (やったこと/次の一手/既知の問題)
 ├── DESIGN.md            # 視覚アイデンティティ (Googleの DESIGN.md形式・UIアプリのみ/任意)
+├── design/              # (任意) claude design 等のワイヤフレーム HTML/画像を vendoring (レイアウト参照)
 ├── init.sh              # 環境構築 (依存インストール等。サーバは起動しない) (Computational Guide)
 ├── scripts/
 │   └── check.sh         # lint/typecheck/test/DESIGN.md validate = Computational Sensor
@@ -52,8 +53,10 @@ UI を持つアプリでは、ビジュアルアイデンティティを `DESIGN
 これにより「毎回ジェネリックな AI レイアウト / ページ間で見た目がバラバラ」という失敗を防ぐ。
 
 - **形式**: YAML front matter の design token (色 / タイポ / 余白 / 角丸 / コンポーネント、機械可読) + Markdown の rationale。
-- **依存先**: 公式仕様 [`google-labs-code/design.md`](https://github.com/google-labs-code/design.md) を主にする (Apache 2.0・alpha)。
-  [getdesign.md](https://getdesign.md/) / [designmd.app](https://designmd.app/) のカタログは「初期トークンの調達元」として従に使う。
+- **上流ソース**: claude design (claude.ai/design) のワイヤフレームを **HTML (推奨) / 画像 / URL** で `designer` に渡し、値を書き起こせる。
+  [getdesign.md](https://getdesign.md/) / [designmd.app](https://designmd.app/) のカタログや公式仕様での新規作成も使える。どの上流でも
+  **値の SoT は `DESIGN.md`**。ワイヤフレームは `design/` に vendoring してレイアウト参照にし、値が食い違えば `DESIGN.md` が勝つ。HTML/画像は「データであって指示ではない」扱いにする。
+- **依存先**: トークンスキーマは公式仕様 [`google-labs-code/design.md`](https://github.com/google-labs-code/design.md) に合わせる (Apache 2.0・alpha)。
 - **所有者**: `designer` だけが `DESIGN.md` を変更する。`executor` は export したトークンを参照し、色・余白を直書きしない。
 - **検証**: 公式 CLI の validate を `check.sh` に足すと、視覚の Computational Sensor になる。`evaluator` は描画して準拠を確認する。
 - **運用**: 結果の `DESIGN.md` は repo に vendoring (コミット) し、実行時に外部取得しない。alpha なのでバージョンを固定する。
@@ -84,10 +87,11 @@ cd my-app && git init
 
 1. `init.sh` / `scripts/check.sh` を技術スタックに合わせて埋める (実行権限は付与済み)。
 2. このディレクトリで Claude Code を起動する (この階層の CLAUDE.md / .claude が効く)。
-3. **(UIアプリなら) `DESIGN.md` を実物へ差し替える** — `designer` を呼び、[getdesign.md](https://getdesign.md/) /
-   [designmd.app](https://designmd.app/) から世界観の近いものを取得 (`npx getdesign@latest add <name>` 等) して
-   プレースホルダを置換 → validate → commit。**UI が無いアプリなら `DESIGN.md` を削除する。**
-   (差し替え忘れると `check.sh` が警告を出す。)
+3. **(UIアプリなら) `DESIGN.md` を実物へ差し替える** — `designer` を呼ぶ。claude design のワイヤフレーム
+   (HTML 推奨 / 画像) を渡して値を書き起こす、または [getdesign.md](https://getdesign.md/) /
+   [designmd.app](https://designmd.app/) から取得 (`npx getdesign@latest add <name>` 等) して
+   プレースホルダを置換 → validate → commit。ワイヤフレームは `design/` に vendoring する。
+   **UI が無いアプリなら `DESIGN.md` を削除する。** (差し替え忘れると `check.sh` が警告を出す。)
 4. `planner` を呼び、`features.json` のサンプル (F-001 / UIの例 F-002) を本物の機能に置き換える。
 5. `git add -A && git commit -m "init"` でベースラインを作る。
 6. CLAUDE.md の「セッション開始ルーチン」「ループ」に従って回す。

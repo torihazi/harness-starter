@@ -3,8 +3,10 @@
 #
 # PLACEHOLDER — UI を作る前に必ず実物へ差し替えること (UI が無ければこのファイルを削除)。
 # これはプレースホルダ。designer が以下のいずれかで置き換える:
+#   - claude design (claude.ai/design) のワイヤフレーム HTML/画像から値を書き起こす (HTML 推奨・design/ に vendoring)
 #   - getdesign.md / designmd.app のカタログから近いものを選ぶ
 #   - 公式 CLI (google-labs-code/design.md) で生成・validate する
+# 値の SoT は常にこの DESIGN.md。ワイヤフレームは上流入力＋レイアウト参照で、食い違えば DESIGN.md が勝つ。
 # 正確なトークンスキーマは公式仕様 (alpha・変わりうる) を参照し、バージョンを固定すること:
 #   https://github.com/google-labs-code/design.md
 meta:
