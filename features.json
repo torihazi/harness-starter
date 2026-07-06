@@ -5,15 +5,15 @@
     "status は failing | passing のみ。新規は必ず failing。",
     "受け入れ基準 (acceptance) を削除・緩和してはならない。",
     "status を passing にできるのは evaluator の判定時のみ。",
-    "sprints[] は順序付きの束。sprint.status は planned | in_progress | done。",
-    "plan (全機能 + sprint 分割) は人間が1回承認し、以後は sprint 境界の go/no-go だけを取る。",
-    "commit は機能ごと、PR は sprint ごとに出す。sprint 末にまとめてコミットしない。"
+    "sprints[] は関連機能を束ねた計画上のグルーピング。sprint.status は planned | in_progress | done (進捗可視化用の帳簿。全機能 passing で done)。",
+    "plan (全機能 + sprint 分割) は人間が1回承認し、以後は各機能の go/no-go (PR後) を取る。",
+    "commit も PR も機能ごとに出す。sprint 末にまとめない。"
   ],
   "sprints": [
     {
       "id": "S-1",
       "title": "サンプル sprint: 最小の動くアプリ",
-      "goal": "ヘルスチェックとトップページまでを1本の PR で出せる状態にする。",
+      "goal": "ヘルスチェックとトップページに関する機能を束ねたグルーピング (各機能ごとに PR/go-no-go)。",
       "status": "planned"
     }
   ],

@@ -39,13 +39,13 @@ harness-starter/
 ## ループ
 
 ```
-plan(全機能 + sprint 分割) → 人間が1回承認 → [sprint ごと: 機能ループ(execute → evaluate → 機能ごと commit) → PR → go/no-go → 次 sprint] → done
+plan(全機能 + sprint 分割) → 人間が1回承認 → [機能ごと: execute → evaluate → passing で commit → PR → go/no-go → 次機能] → done
 ```
 
-- **plan は最初に書き切る**: planner が全機能へ分解し、順序付きの sprint に束ねる。承認は plan 全体で1回だけ。
-- 承認後は本体セッションが sprint を自律的に回す。止まるのは「同一機能で 5 回失敗」「想定外ブロッカー」「sprint 境界の go/no-go」のときだけ。
+- **plan は最初に書き切る**: planner が全機能へ分解し、順序付きの sprint に束ねる。承認は plan 全体で1回だけ。sprint は「関連機能を束ねた計画グルーピング」で、PR/go-no-go の単位ではない。
+- 承認後は本体セッションが機能を1つずつ回す。各機能は execute → evaluate → passing で commit → その機能の PR → go/no-go。止まるのは「同一機能で 5 回失敗」「想定外ブロッカー」「各機能の go/no-go」のときだけ。
 - 生成 (executor) と評価 (evaluator) は必ず分離する。機能は逐次に1つずつ (同時実装はしない)。
-- commit は機能ごと、PR は sprint ごと。evaluator が passing を出すまで完了扱いにしない。
+- commit も PR も機能ごと (差分は1機能分)。機能ごとに `feature/<F-id>-<slug>` ブランチを切り、go で main にマージして次機能へ。evaluator が passing を出すまで完了扱いにしない。
 
 ## ビジュアルデザイン (DESIGN.md) — UIアプリのみ
 
